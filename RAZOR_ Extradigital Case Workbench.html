@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>RAZOR: Extradigital Case Workbench</title>
+<style>
+:root{--bg:#eceee9;--cd:#fbfbf8;--tx:#1b2321;--mu:#5d6b67;--bd:#cfd6d1;--ac:#0f6b62;--ok:#1d7a3a;--bad:#b3261e;--wn:#9a6700;--ft:#e6eae5;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1514;--cd:#172120;--tx:#e6eeeb;--mu:#93a39e;--bd:#2b3a37;--ac:#4fd1be;--ok:#5fd38a;--bad:#ff8a80;--wn:#f3c24f;--ft:#1f2c2a;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1514;--cd:#172120;--tx:#e6eeeb;--mu:#93a39e;--bd:#2b3a37;--ac:#4fd1be;--ok:#5fd38a;--bad:#ff8a80;--wn:#f3c24f;--ft:#1f2c2a;color-scheme:dark}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--cd)}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--cd);border-bottom:1px solid var(--bd);padding:10px 16px}
+h1{font:700 20px/1.2 Georgia,"Times New Roman",serif;margin:0;letter-spacing:.02em}h1 span{font:400 13px system-ui,sans-serif;color:var(--mu);margin-left:8px}
+nav{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+button,.b{font:inherit;border:1px solid var(--bd);background:var(--ft);color:var(--tx);border-radius:6px;padding:4px 11px;cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--ac);outline-offset:1px}
+nav button.on,.pr{background:var(--ac);color:var(--cd);border-color:var(--ac)}
+main{max-width:980px;margin:0 auto;padding:14px 16px 60px}
+section{display:none}section.on{display:block}
+.c{background:var(--cd);border:1px solid var(--bd);border-radius:6px;padding:12px 14px;margin:0 0 12px;overflow-x:auto}
+.c h2{font:700 15px Georgia,serif;margin:0 0 8px}
+table{border-collapse:collapse;width:100%;font-size:12.5px}th,td{text-align:left;padding:4px 8px;border-bottom:1px solid var(--bd);white-space:nowrap}th{color:var(--mu);font-weight:600}
+td.w{white-space:normal;min-width:180px}
+.t{display:inline-block;padding:0 7px;border-radius:99px;font-size:11.5px;border:1px solid currentColor}
+.ok{color:var(--ok)}.bad{color:var(--bad)}.wn{color:var(--wn)}.mu{color:var(--mu)}
+.g{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:8px}.g div{background:var(--ft);border-radius:6px;padding:7px 9px}.g b{display:block;font-size:16px}
+.bar{height:8px;background:var(--ft);border-radius:4px;overflow:hidden;min-width:90px}.bar i{display:block;height:100%;background:var(--ac)}
+input,select,textarea{font:inherit;background:var(--ft);color:var(--tx);border:1px solid var(--bd);border-radius:4px;padding:2px 6px}
+input[type=number]{width:68px}textarea{width:100%;font:12px ui-monospace,Menlo,monospace}
+pre{font:12px/1.55 ui-monospace,Menlo,monospace;margin:0;overflow-x:auto}
+.m td{text-align:center;cursor:pointer;user-select:none}
+label{margin-right:10px;white-space:nowrap}
+.gate{border-left:4px solid var(--bad);padding:6px 10px;background:var(--ft)}.gate.open{border-color:var(--ok)}
+.card{border:1px solid var(--bd);border-radius:6px;padding:8px 10px;margin:0 0 8px}
+ol{margin:4px 0;padding-left:20px}li{margin:3px 0}
+</style></head><body>
+<header><h1>RAZOR<span>Case 002, Wenoti Arcade: from claim to containment</span></h1><nav id="nv"></nav></header>
+<main><section id="s0"></section><section id="s1"></section><section id="s2"></section><section id="s3"></section><section id="s4"></section></main>
+<script>
+const $=s=>document.querySelector(s);
+const f=(x,d=1)=>Number(x).toLocaleString('en',{minimumFractionDigits:d,maximumFractionDigits:d});
+const med=a=>{const s=[...a].sort((x,y)=>x-y),n=s.length;return n%2?s[(n-1)/2]:(s[n/2-1]+s[n/2])/2};
+const HY=['Records error','Meter fault or swap','Ordinary equipment','Tampering or bypass','Extradigital draw'],HS=['Rec','Meter','Equip','Tamper','Extra'],PR=[.25,.25,.25,.15,.10];
+const RW={A:1,B:.8,C:.6,D:.4,E:.2,F:0},CW=[0,1,.85,.7,.5,.3,.1],LR={'-2':.1,'-1':.4,'0':1,'1':2.5,'2':10},SY={'-2':'−−','-1':'−','0':'·','1':'+','2':'++'};
+const D0=`Oct 13,18477.2,24.6
+Oct 14,18505.3,28.1
+Oct 15,18528.2,22.9
+Oct 16,18559.6,31.4
+Oct 17,18586.3,26.7
+Oct 18,18621.5,35.2
+Oct 19,18651.3,29.8
+Oct 20,18674.8,23.5
+Oct 21,18702.4,27.6
+Oct 22,18727.5,25.1
+Oct 23,21411.5,2684
+Oct 24,21442.2,503.2
+Oct 25,21464.0,21.8
+Oct 26,21492.9,28.9`;
+let A={amps:63,volt:415,pf:.9,comp:15,room:300,win:89},raw=D0,mid='MJWHKZLTNBUXE5A',done={},ovr={},LOG=[],S={};
+let SR=[['reg','Dept. meter register','B',3],['use','Dept. daily-usage column','C',5],['nar','Dept. narrative observations','C',3],['tra','Transcript A (agents)','B',2],['deb','Case debrief','C',3],['gui','Team guide (analysis, not evidence)','F',6]].map(([id,n,r,c])=>({id,n,r,c}));
+const TS=[{id:'T0',n:'Get service nameplate rating and breaker trip logs',c:1,au:'Department request',o:['Rating covers the draw','Rating too small'],q:[.5,.5,.6,.6,.3]},
+{id:'T1',n:'Compare feeder meter, Oct 23–24',c:1,au:'Department request',o:['No upstream draw','Upstream draw seen'],q:[.95,.9,.05,.05,.3]},
+{id:'T2',n:'Pull 15-minute interval data',c:2,au:'Department request',o:['Step (register jump)','Smooth ramp'],q:[.6,.85,.1,.2,.3]},
+{id:'T3',n:'Inspect panel, cabinet, heat and bypass',c:4,au:'Sanction required',o:['Ordinary cause found','Unexplained'],q:[.5,.5,.9,.9,.05]},
+{id:'T4',n:'Forensic image of cabinet storage and logs',c:5,au:'Sanction required',o:['Benign logs','Anomalous logs'],q:[.95,.95,.8,.4,.2]}];
+const SRC={dos:`The following observations were noted during data review but have not been established: HVAC startup coincidence. Minor phase imbalance: A small phase increase was recorded, although no single phase accounts for the total demand excursion. No conclusion can be drawn regarding internal semiconductor temperatures without additional instrumentation.`,
+tra:`POI-1 (stuttering): Uh… (looking at bare wrist) Oh! Look at the time! Really must go. Field Observation: Machine reportedly began warbling and reverberating following the interaction.`,
+deb:`Wenoti arcade on 92nd avenue has been drawing multiple times its typical amount of current from the district supply. The owner reported these inexplicable surges and claims not to have made any modifications that could have caused them.`};
+const AI=[['dos','have not been established','Dossier observations are self-labelled unestablished.'],['dos','no single phase accounts for the total demand excursion','The load is not concentrated on one phase.'],['tra','Look at the time! Really must go.','POI-1 used a scripted-sounding exit line.'],['deb','claims not to have made any modifications','Owner denies modifications (single source).'],['deb','the surge began at 22:31','Surge start time is 22:31.']];
+const PB={ord:['Correct the records and billing for the affected days (Department).','Test or replace the meter; keep the old unit and seals as evidence.','Document the cause; notify the owner and the Department.','Run a 30-day watch with the watchdog thresholds below.','Close with a lessons-learned report.'],
+int:['Preserve: photograph, hash logs, image storage (sanction required), start chain of custody.','Observe: sub-meter and power-quality logger on the cabinet circuit, thermal camera.','Isolate: cut network and wireless links, restrict access, quarantine removable media.','De-energize by lockout/tagout, performed by a qualified electrician.','Relocate the cabinet to a controlled lab after steps 1–4.','Eradicate and recover: replace storage, firmware and power supply from known-good sources; re-energize in stages with alarms.','Close: update detection rules, keep a monitoring window, report to authorities.'],
+und:['Keep monitoring with the watchdog thresholds below.','Run the next ranked test from Plan.','Escalate with the referral packet if the gap persists.','Re-test on any new reconcile failure or draw above threshold.']};
+const RX=[['Guide: phase imbalance “points to specific equipment”','Dossier: no single phase accounts for the excursion','bad'],['Guide presents HVAC, harmonics, phase as findings','Dossier: “have not been established”','bad'],['Debrief cites [Transcript 1]','The file provided is Transcript A','wn'],['Guide ties the surge to 22:31','Dossier gives daily totals only','wn'],['Debrief: “current”, multiple surges','Dossier: kWh, one clear step, no demand data','wn']];
+const W=p=>p<.05?'almost no chance':p<.2?'very unlikely':p<.45?'unlikely':p<=.55?'roughly even':p<.8?'likely':p<.95?'very likely':'almost certain';
+const topi=P=>P.indexOf(Math.max(...P)),ent=P=>-P.reduce((s,x)=>s+(x>0?x*Math.log2(x):0),0);
+function calc(){
+ const R=raw.trim().split('\n').map(l=>l.split(',')).map(p=>({d:(p[0]||'').trim(),r:+p[1],l:+p[2]})).filter(x=>x.d&&isFinite(x.r)&&isFinite(x.l));
+ R.forEach((x,i)=>{x.dl=i?+(x.r-R[i-1].r).toFixed(2):null;x.g=i?+(x.l-x.dl).toFixed(2):null;x.bad=i>0&&Math.abs(x.g)>.05});
+ const dl=R.filter(x=>x.dl!=null).map(x=>x.dl),m=med(dl),sd=1.4826*(med(dl.map(v=>Math.abs(v-m)))||1);
+ R.forEach(x=>x.z=x.dl==null?null:(x.dl-m)/sd);
+ const sp=R.reduce((a,x)=>x.l>a.l?x:a,R[0]),cf=R.filter(x=>x.bad),a={R,m,sd,sp,cf,mult:sp.l/m};
+ const k3=Math.sqrt(3)*A.volt*A.pf,P=sp.l/(A.win/60),mass=A.room*1.2;
+ const p={k3,req24:sp.l*1000/24/k3,reqW:sp.l*1000/(A.win/60)/k3,cap24:k3*A.amps*24/1000,P,dTs:P*1000/(mass*1005),store:mass*1005*10/3.6e6+.72,si:sp.l*3.6e6/7e5/1000,cov:Math.min(100,A.comp*24/Math.max(1,sp.l-m)*100)};
+ p.fail=p.req24>A.amps;
+ const g0=cf[0]?cf[0].g:0;
+ S={a,p,ev:[{id:'E1',t:`${sp.d} needs ≥${f(p.req24,0)} A over 24 h (service ${A.amps} A)`,s:'reg',e:1,r:p.fail?[1,1,-2,-1,1]:[0,0,0,0,0]},
+ {id:'E2',t:`Logged vs register gap ${f(g0)} kWh${cf[0]?' on '+cf[0].d:''}`,s:'use',e:1,r:cf[0]?[2,1,0,2,0]:[0,0,0,0,0]},
+ {id:'E3',t:'No heat observed vs the energy claim (sink ledger)',s:'nar',e:0,r:p.dTs>.1?[1,1,-2,-1,1]:[0,0,0,0,0]},
+ {id:'E4',t:`HVAC startup covers ≤${f(p.cov,0)}% of excess`,s:'nar',e:0,r:[0,0,-1,0,0]},
+ {id:'E5',t:'Elevated harmonic content',s:'nar',e:0,r:[0,1,1,1,1]},
+ {id:'E6',t:'No single phase accounts for the surge',s:'nar',e:0,r:[0,0,-1,1,1]},
+ {id:'E7',t:'POI-1 fiddled with the machine, deflected, fled',s:'tra',e:1,r:[0,0,0,2,1]},
+ {id:'E8',t:'Machine reportedly warbled afterwards',s:'tra',e:0,r:[-1,-1,0,1,1]}]};
+ pst()}
+function pst(){const lp=PR.map(Math.log);S.ev.forEach(e=>{const s=SR.find(x=>x.id===e.s);e.w=RW[s.r]*CW[s.c]*(e.e?1:.4);e.rt=e.r.map((v,h)=>ovr[e.id+h]??v);e.rt.forEach((v,h)=>lp[h]+=e.w*Math.log(LR[v]))});
+ TS.forEach(t=>{const o=done[t.id];if(o!=null)t.q.forEach((q,h)=>lp[h]+=Math.log(o?1-q:q))});
+ const mx=Math.max(...lp),e=lp.map(v=>Math.exp(v-mx)),z=e.reduce((s,v)=>s+v,0);return S.P=e.map(v=>v/z)}
+function gate(){const P=S.P,c1=100-S.p.cov>=50,c2=['T1','T2','T3'].every(t=>done[t]!=null),c3=P[4]>=.5&&Math.max(...P.slice(0,4))<=.15;return{c1,c2,c3,open:c1&&c2&&c3}}
+function eig(t,P){let g=ent(P);for(const o of[0,1]){const q=P.map((x,h)=>x*(o?1-t.q[h]:t.q[h])),po=q.reduce((s,x)=>s+x,0);if(po>0)g-=po*ent(q.map(x=>x/po))}return g}
+function flip(){const b=topi(S.P);for(const e of S.ev)for(let h=0;h<5;h++)for(const d of[-1,1]){const nv=e.rt[h]+d;if(nv<-2||nv>2)continue;const pv=ovr[e.id+h];ovr[e.id+h]=nv;const t=topi(pst());if(pv===undefined)delete ovr[e.id+h];else ovr[e.id+h]=pv;if(t!==b){pst();return`${e.id} on “${HY[h]}” shifted ${d>0?'+1':'−1'}`}}pst();return null}
+function b32(s){const al='ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';let b='';for(const c of s.toUpperCase().replace(/=+$/,'')){const i=al.indexOf(c);if(i<0)return'';b+=i.toString(2).padStart(5,'0')}let o='';for(let i=0;i+8<=b.length;i+=8)o+=String.fromCharCode(parseInt(b.slice(i,i+8),2));return o}
+function decs(s){const r=[['Base32',b32(s)]];try{r.push(['Base64',atob(s)])}catch(e){}
+ if(/^([0-9a-f]{2})+$/i.test(s))r.push(['Hex',s.match(/../g).map(h=>String.fromCharCode(parseInt(h,16))).join('')]);
+ r.push(['ROT13',s.replace(/[a-z]/gi,c=>String.fromCharCode((c<='Z'?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26))]);
+ return r.map(([m,v])=>({m,v,sc:v?(v.match(/[a-z ]/gi)||[]).length/v.length:0})).sort((x,y)=>y.sc-x.sc)}
+const sh=async s=>{try{return[...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s)))].map(b=>b.toString(16).padStart(2,'0')).join('')}catch(e){return'unavailable'}};
+async function lg(a,p){const q=LOG.length?LOG[LOG.length-1].h:'genesis',s=LOG.length,t=new Date().toISOString();LOG.push({s,t,a,p,q,h:await sh(`${q}|${s}|${t}|${a}|${p}`)});r4()}
+async function vf(){let q='genesis';for(const e of LOG){const h=await sh(`${q}|${e.s}|${e.t}|${e.a}|${e.p}`);if(h!==e.h||e.q!==q){$('#vr').innerHTML=`<span class=bad>Chain broken at entry #${e.s} (${e.a}). Edited after sealing.</span>`;return}q=e.h}$('#vr').innerHTML=`<span class=ok>Chain intact: ${LOG.length} entries.</span>`}
+function tp(){if(LOG.length>1){LOG[1].p+=' ';r4()}}
+function sc(k){done=k==='A'?{T1:0,T2:0}:k==='B'?{T0:1,T1:1,T2:1,T3:1,T4:1}:{};lg('scenario',k||'reset');run()}
+function rec(t,o){done[t]=o;lg('test-returned',t+':'+o);run()}
+async function ex(){const dh=await sh(raw),g=gate(),P=S.P,v=vd();$('#pk').value=`REFERRAL PACKET, Case 002, Wenoti Arcade
+To: Department of Electricity. From: EXUN analyst workstation.
+Verdict: ${v.l}
+Hypotheses: ${HY.map((h,i)=>h+' '+f(P[i]*100,0)+'% ('+W(P[i])+')').join('; ')}
+Gate: ${g.open?'OPEN':'CLOSED'} (ceiling ${g.c1?'met':'not met'}; tests ${g.c2?'returned':'outstanding'}; probability ${g.c3?'met':'not met'})
+Discrepancies for verification: ${S.a.cf.map(x=>x.d+': logged '+f(x.l)+' vs register '+f(x.dl)+' ('+f(x.g)+' kWh unaccounted)').join('; ')||'none'}
+Capacity: ${S.a.sp.d} needs ≥${f(S.p.req24,0)} A over 24 h vs ${A.amps} A assumed service. Please confirm the nameplate rating.
+Source grades: ${SR.map(s=>s.n+' '+s.r+'/'+s.c).join('; ')}
+Tests returned: ${Object.keys(done).map(t=>t+'='+TS.find(x=>x.id===t).o[done[t]]).join(', ')||'none'}
+Input data SHA-256: ${dh}
+Chain head: ${LOG.length?LOG[LOG.length-1].h:'none'}`;lg('referral-exported',dh.slice(0,12))}
+function vd(){const g=gate(),P=S.P,t=topi(P);return g.open?{k:'int',l:'Intrusion supported: declare and contain'}:(t<4&&P[t]>=.5)?{k:'ord',l:'Ordinary cause likely: '+HY[t]}:{k:'und',l:'Undetermined: extradigital not supportable yet'}}
+function run(){calc();r0();r1();r2();r3();r4()}
+function r0(){const{a,p}=S,tg=(c,t)=>`<span class="t ${c}">${t}</span>`;
+ const cl=[[`${a.sp.d} usage is ${f(a.sp.l,0)} kWh`,`${f(a.mult,0)}× baseline. Needs ≥${f(p.req24,0)} A over 24 h or ≥${f(p.reqW,0)} A in ${A.win} min; assumed service ${A.amps} A (max ${f(p.cap24,0)} kWh/24 h)`,p.fail?tg('bad','Doubtful'):tg('ok','Plausible')],
+ ...a.cf.map(x=>[`${x.d} usage is ${f(x.l)} kWh`,`Register moved ${f(x.dl)}; ${f(x.g)} kWh unaccounted for`,tg('bad','Contradicted')]),
+ ['HVAC startup explains it',`${A.comp} kW × 24 h = ${A.comp*24} kWh, about ${f(p.cov,0)}% of the excess`,tg('wn','Insufficient')],
+ ['Harmonic content','Describes waveform shape, not energy volume; can distort some meters',tg('wn','Unestablished')],
+ ['Phase imbalance','Dossier says no single phase accounts for it; the guide reads it the opposite way',tg('bad','Misread')],
+ ['No heat observed',`If the register is right, ${f(p.P/1000,1)} MW into ${A.room} m³ warms the air ≈${f(p.dTs,1)} °C/s; on-site storage ≈${f(p.store,1)} kWh (${f(p.store/a.sp.l*100,2)}%)`,tg('bad','Contradicts energy claim')],
+ ['Surge happened at 22:31','Dossier gives daily totals only; the link is the guide’s inference',tg('wn','Unestablished')]];
+ const d=decs(mid);
+ $('#s0').innerHTML=`<div class=c><h2>Assumptions (editable, everything recomputes)</h2>${[['amps','Service A'],['volt','Volts'],['pf','PF'],['comp','Compressor kW'],['room','Room m³'],['win','Surge window min']].map(([k,l])=>`<label>${l} <input type=number step=any value=${A[k]} onchange="A.${k}=+this.value;lg('assumption','${k}='+this.value);run()"></label>`).join('')}
+ <details><summary class=mu>Load your own meter table (date, register, logged)</summary><textarea id=dt rows=6>${raw}</textarea><button onclick="raw=$('#dt').value;lg('data-loaded',raw.length+' chars');run()">Analyze</button></details></div>
+ <div class=c><h2>Ledger reconcile and baseline</h2><table><tr><th>Date<th>Register<th>Logged<th>Δ register<th>Gap<th>Robust z<th>Status</tr>${a.R.map(x=>`<tr><td>${x.d}<td>${f(x.r)}<td>${f(x.l)}<td>${x.dl==null?'n/a':f(x.dl)}<td>${x.g==null?'n/a':f(x.g)}<td>${x.z==null?'n/a':f(x.z,0)}<td>${x.dl==null?tg('mu','no prior'):x.bad?tg('bad','Conflict'):x.z>6?tg('wn','Outlier'):tg('ok','OK')}</tr>`).join('')}</table>
+ <p class=mu>Baseline ${f(a.m)} kWh/day, robust SD ${f(a.sd)}. A day is an outlier beyond 6 robust SD.</p></div>
+ <div class=c><h2>Energy Sink Ledger: where did ${f(a.sp.l,0)} kWh go?</h2><div class=g><div>Energy<b>${f(a.sp.l*3.6e6/1e9,2)} GJ</b></div><div>EV packs (100 kWh)<b>${f(a.sp.l/100,0)}</b></div><div>Avg power in ${A.win} min<b>${f(p.P/1000,2)} MW</b></div><div>Room air warming<b>${f(p.dTs,1)} °C/s</b></div><div>Silicon to hold it (1,000 K)<b>${f(p.si,0)} t</b></div><div>On-site storage<b>${f(p.store,1)} kWh</b></div></div></div>
+ <div class=c><h2>Claim verification</h2><table>${cl.map(c=>`<tr><td class=w>${c[0]}<td class=w>${c[1]}<td>${c[2]}</tr>`).join('')}</table>
+ <p class=mu>Integrity: ${a.cf.length+(p.dTs>.1?1:0)} internal contradictions, ${RX.length} cross-document discrepancies, 1 unsupported timing link, 1 evidence gap (no interval data).</p></div>
+ <div class=c><h2>Contradiction radar</h2><table>${RX.map(x=>`<tr><td class=w>${x[0]}<td class=w>${x[1]}<td>${tg(x[2],x[2]=='bad'?'Conflict':'Check')}</tr>`).join('')}</table></div>
+ <div class=c><h2>Decoder</h2><input id=mi value="${mid}" size=20 onchange="mid=this.value.trim();lg('decode',mid);run()"> ${d.slice(0,3).map((x,i)=>`<div>${i?'':'<b>Best: </b>'}${x.m}: <code>${x.v.replace(/[<&]/g,'?')}</code> <span class=mu>(readability ${f(x.sc*100,0)}%)</span></div>`).join('')}<p class=mu>A lead, not evidence: the decode is reproducible but its meaning is unknown.</p></div>`}
+function r1(){const P=S.P,g=gate(),fl=flip(),ok=AI.filter(x=>SRC[x[0]].includes(x[1])).length;
+ const cs=(e,h)=>`<td onclick="ovr['${e.id}${h}']=${e.rt[h]>=2?-2:e.rt[h]+1};lg('rating','${e.id}/${HS[h]}');run()" class="${e.rt[h]<0?'bad':e.rt[h]>0?'ok':'mu'}">${SY[e.rt[h]]}</td>`;
+ $('#s1').innerHTML=`<div class=c><h2>Source register (NATO-style grades, editable)</h2><table><tr><th>Source<th>Reliability A–F<th>Credibility 1–6</tr>${SR.map((s,i)=>`<tr><td>${s.n}<td><select onchange="SR[${i}].r=this.value;lg('grade','${s.id}:'+this.value);run()">${'ABCDEF'.split('').map(x=>`<option${x==s.r?' selected':''}>${x}`).join('')}</select><td><select onchange="SR[${i}].c=+this.value;lg('grade','${s.id}:'+this.value);run()">${[1,2,3,4,5,6].map(x=>`<option${x==s.c?' selected':''}>${x}`).join('')}</select></tr>`).join('')}</table></div>
+ <div class=c><h2>Competing hypotheses (click a cell to change a rating)</h2><table class=m><tr><th style="text-align:left">Evidence<th>Weight${HS.map(h=>'<th>'+h).join('')}</tr>${S.ev.map(e=>`<tr><td class=w style="text-align:left">${e.id} ${e.t} ${e.e?'':'<span class=mu>(unestablished)</span>'}<td>${f(e.w,2)}${e.rt.map((_,h)=>cs(e,h)).join('')}</tr>`).join('')}</table></div>
+ <div class=c><h2>Posterior</h2><table>${HY.map((h,i)=>`<tr><td>${h}<td style="width:45%"><div class=bar><i style="width:${P[i]*100}%"></i></div><td>${f(P[i]*100,0)}%<td class=mu>${W(P[i])}</tr>`).join('')}</table>
+ <p class=mu>${fl?'Flip point: ranking changes if '+fl+'.':'Ranking is stable under any single-step rating change.'} Independence is assumed; merge correlated items.</p></div>
+ <div class="c gate ${g.open?'open':''}"><b>Burden-of-proof gate: ${g.open?'OPEN':'CLOSED'}</b><br>${g.c1?'✓':'✗'} Ordinary causes leave at least half of the excess unexplained (${f(100-S.p.cov,0)}%)<br>${g.c2?'✓':'✗'} Discriminating tests T1, T2, T3 returned<br>${g.c3?'✓':'✗'} Extradigital at least 50% and every other hypothesis at most 15%</div>
+ <div class=c><h2>Assist (replay mode, proposes only)</h2><table>${AI.map(x=>{const v=SRC[x[0]].includes(x[1]);return`<tr><td class=w>${x[2]}<td class=w>“${x[1]}”<td><span class="t ${v?'ok':'bad'}">${v?'Quote verified':'Rejected: not in source'}</span></tr>`}).join('')}</table>
+ <p class=mu>${ok} of ${AI.length} claims survived quote-or-reject. AI never sets grades, ratings or numbers.</p>
+ <div class=card><b>Devil’s advocate (replay):</b> the strongest case against “records error” is that harmonics and the warbling report, if real, indicate a physical electrical event. It would be falsified if T1 finds no upstream draw.</div></div>`}
+function r2(){const P=S.P,rk=TS.filter(t=>done[t.id]==null).map(t=>({t,g:eig(t,P)})).map(x=>({...x,s:x.g/x.t.c})).sort((a,b)=>b.s-a.s);
+ $('#s2').innerHTML=`<div class=c><h2>Next best steps (information gain per cost)</h2>${rk.length?rk.map((x,i)=>`<div class=card><b>${i?'':'Next: '}${x.t.id} ${x.t.n}</b> <span class=mu>cost ${x.t.c}/5, ${x.t.au}, gain ${f(x.g,2)} bits, score ${f(x.s,2)}</span><br>${x.t.o.map((o,j)=>`<button onclick="rec('${x.t.id}',${j})">${o}</button> `).join('')}</div>`).join(''):'<p>All tests returned.</p>'}
+ ${Object.keys(done).length?'<p class=mu>Returned: '+Object.keys(done).map(t=>t+' = '+TS.find(x=>x.id===t).o[done[t]]).join('; ')+'</p>':''}</div>
+ <div class=c><h2>Replay Department replies</h2><button onclick="sc('A')">Reply A: meter swap</button> <button onclick="sc('B')">Reply B: real upstream ramp</button> <button onclick="sc('')">Reset</button><p class=mu>Both replies are team-authored fiction. Watch the posterior and gate move in Judge.</p></div>
+ <div class=c><h2>Decision tree (main path)</h2><pre>T1 Feeder meter, Oct 23–24
+├─ No upstream draw → records or meter fault → seals, service log
+└─ Upstream draw → T2 interval data
+   ├─ Step → swap or reset → service log
+   └─ Ramp → T3 on-site inspection → unexplained → declare, then contain
+Step 0 (free, parallel): nameplate rating and breaker trip logs</pre></div>`}
+function r3(){const v=vd(),a=S.a,PL=PB[v.k];
+ $('#s3').innerHTML=`<div class=c><h2>Verdict</h2><b class="${v.k=='int'?'bad':v.k=='ord'?'ok':'wn'}">${v.l}</b></div>
+ <div class=c><h2>${v.k=='int'?'Containment ladder (least disruptive first, evidence preserved first)':v.k=='ord'?'Ordinary-cause playbook':'Undetermined playbook'}</h2><ol>${PL.map(x=>`<li>${x}</li>`).join('')}</ol><p class=mu>Electrical work belongs to qualified electricians. Intrusive steps need sanction.</p></div>
+ <div class=c><h2>Watchdog thresholds (Residual running daily)</h2><p>Alert when logged vs register differs by more than 0.05 kWh, or daily usage exceeds ${f(a.m+6*a.sd)} kWh (baseline + 6 robust SD).</p></div>`}
+function r4(){$('#s4').innerHTML=`<div class=c><h2>Seal: hash-chained action log</h2><button onclick="vf()">Verify chain</button> <button onclick="tp()">Tamper with entry #1</button> <button onclick="ex()">Generate referral packet</button> <span id=vr></span>
+ <table style="margin-top:8px"><tr><th>#<th>Action<th>Detail<th>Hash</tr>${LOG.map(e=>`<tr><td>${e.s}<td>${e.a}<td class=w>${String(e.p).replace(/[<&]/g,'?').slice(0,60)}<td><code>${e.h.slice(0,14)}</code></tr>`).join('')}</table><p class=mu>Tamper-evident, not tamper-proof: it detects edits after sealing but cannot prove who made them.</p></div>
+ <div class=c><h2>Referral packet</h2><textarea id=pk rows=12 readonly placeholder="Generate the packet to fill this in."></textarea></div>`}
+const TB=['1 Verify','2 Judge','3 Plan','4 Respond','Seal'];
+function show(i){document.querySelectorAll('section').forEach((s,j)=>s.classList.toggle('on',i==j));document.querySelectorAll('nav button').forEach((b,j)=>b.classList.toggle('on',i==j));scrollTo(0,0)}
+$('#nv').innerHTML=TB.map((t,i)=>`<button onclick="show(${i})">${t}</button>`).join('');
+run();show(0);lg('case-open','Case 002 loaded');
+</script></body></html>
