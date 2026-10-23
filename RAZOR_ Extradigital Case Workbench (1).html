@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>RAZOR: Extradigital Case Workbench</title>
+<style>
+:root{--bg:#eceee9;--cd:#fbfbf8;--tx:#1b2321;--mu:#5d6b67;--bd:#cfd6d1;--ac:#0f6b62;--ok:#1d7a3a;--bad:#b3261e;--wn:#9a6700;--ft:#e6eae5;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1514;--cd:#172120;--tx:#e6eeeb;--mu:#93a39e;--bd:#2b3a37;--ac:#4fd1be;--ok:#5fd38a;--bad:#ff8a80;--wn:#f3c24f;--ft:#1f2c2a;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1514;--cd:#172120;--tx:#e6eeeb;--mu:#93a39e;--bd:#2b3a37;--ac:#4fd1be;--ok:#5fd38a;--bad:#ff8a80;--wn:#f3c24f;--ft:#1f2c2a;color-scheme:dark}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--cd)}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--cd);border-bottom:1px solid var(--bd);padding:10px 16px}
+h1{font:700 20px/1.2 Georgia,"Times New Roman",serif;margin:0;letter-spacing:.02em}h1 span{font:400 13px system-ui,sans-serif;color:var(--mu);margin-left:8px}
+nav{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+button,.b{font:inherit;border:1px solid var(--bd);background:var(--ft);color:var(--tx);border-radius:6px;padding:4px 11px;cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--ac);outline-offset:1px}
+nav button.on,.pr{background:var(--ac);color:var(--cd);border-color:var(--ac)}
+main{max-width:980px;margin:0 auto;padding:14px 16px 60px}
+section{display:none}section.on{display:block}
+.c{background:var(--cd);border:1px solid var(--bd);border-radius:6px;padding:12px 14px;margin:0 0 12px;overflow-x:auto}
+.c h2{font:700 15px Georgia,serif;margin:0 0 8px}
+table{border-collapse:collapse;width:100%;font-size:12.5px}th,td{text-align:left;padding:4px 8px;border-bottom:1px solid var(--bd);white-space:nowrap}th{color:var(--mu);font-weight:600}
+td.w{white-space:normal;min-width:180px}
+.t{display:inline-block;padding:0 7px;border-radius:99px;font-size:11.5px;border:1px solid currentColor}
+.ok{color:var(--ok)}.bad{color:var(--bad)}.wn{color:var(--wn)}.mu{color:var(--mu)}
+.g{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:8px}.g div{background:var(--ft);border-radius:6px;padding:7px 9px}.g b{display:block;font-size:16px}
+.bar{height:8px;background:var(--ft);border-radius:4px;overflow:hidden;min-width:90px}.bar i{display:block;height:100%;background:var(--ac)}
+input,select,textarea{font:inherit;background:var(--ft);color:var(--tx);border:1px solid var(--bd);border-radius:4px;padding:2px 6px}
+input[type=number]{width:68px}textarea{width:100%;font:12px ui-monospace,Menlo,monospace}
+pre{font:12px/1.55 ui-monospace,Menlo,monospace;margin:0;overflow-x:auto}
+.m td{text-align:center;cursor:pointer;user-select:none}
+label{margin-right:10px;white-space:nowrap}
+.gate{border-left:4px solid var(--bad);padding:6px 10px;background:var(--ft)}.gate.open{border-color:var(--ok)}
+.card{border:1px solid var(--bd);border-radius:6px;padding:8px 10px;margin:0 0 8px}
+ol{margin:4px 0;padding-left:20px}li{margin:3px 0}
+#c3 canvas{display:block}
+.c h2{border-left:3px solid var(--ac);padding-left:8px}
+nav button{padding:6px 14px;font-weight:600}
+#st{display:flex;flex-wrap:wrap;gap:2px 16px;font-size:12.5px;margin-top:6px}
+tr:nth-child(even) td{background:color-mix(in srgb,var(--ft) 45%,transparent)}
+@media(max-width:600px){main{padding:10px}h1 span{display:block;margin:2px 0 0}}
+</style></head><body>
+<header><h1>RAZOR<span>Case 002, Wenoti Arcade: from claim to containment</span></h1><div id="st"></div><nav id="nv"></nav></header>
+<main><section id="s0"></section><section id="s1"></section><section id="s2"></section><section id="s3"></section><section id="s4"></section><section id="s5"><div class="c"><h2>Site map and power path</h2><div id="c3" style="height:360px;width:100%"></div><p class="mu"><span class="ok">■</span> supports <span class="wn">■</span> caution <span class="bad">■</span> contradicts <span class="mu">■</span> not checked. The dashed red line is a possible unmetered bypass; it fades as its probability drops.</p><div id="h3" class="card"></div><p class="mu">Drag to rotate, scroll to zoom, click a location. Results you record here feed the Judge tab and the Seal log.</p><button onclick="T3&&T3.reset()">Reset view</button></div></section><section id="s6"></section></main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+const $=s=>document.querySelector(s);
+const f=(x,d=1)=>Number(x).toLocaleString('en',{minimumFractionDigits:d,maximumFractionDigits:d});
+const med=a=>{const s=[...a].sort((x,y)=>x-y),n=s.length;return n%2?s[(n-1)/2]:(s[n/2-1]+s[n/2])/2};
+const HY=['Records error','Meter fault or swap','Ordinary equipment','Tampering or bypass','Extradigital draw'],HS=['Rec','Meter','Equip','Tamper','Extra'],PR=[.25,.25,.25,.15,.10];
+const RW={A:1,B:.8,C:.6,D:.4,E:.2,F:0},CW=[0,1,.85,.7,.5,.3,.1],LR={'-2':.1,'-1':.4,'0':1,'1':2.5,'2':10},SY={'-2':'−−','-1':'−','0':'·','1':'+','2':'++'};
+const D0=`Oct 13,18477.2,24.6
+Oct 14,18505.3,28.1
+Oct 15,18528.2,22.9
+Oct 16,18559.6,31.4
+Oct 17,18586.3,26.7
+Oct 18,18621.5,35.2
+Oct 19,18651.3,29.8
+Oct 20,18674.8,23.5
+Oct 21,18702.4,27.6
+Oct 22,18727.5,25.1
+Oct 23,21411.5,2684
+Oct 24,21442.2,503.2
+Oct 25,21464.0,21.8
+Oct 26,21492.9,28.9`;
+let A={amps:63,volt:415,pf:.9,comp:15,room:300,win:89},raw=D0,mid='MJWHKZLTNBUXE5A',done={},ovr={},LOG=[],S={};
+let SR=[['reg','Dept. meter register','B',3],['use','Dept. daily-usage column','C',5],['nar','Dept. narrative observations','C',3],['tra','Transcript A (agents)','B',2],['deb','Case debrief','C',3],['gui','Team guide (analysis, not evidence)','F',6]].map(([id,n,r,c])=>({id,n,r,c}));
+const TS=[{id:'T0',n:'Get service nameplate rating and breaker trip logs',c:1,au:'Department request',o:['Rating covers the draw','Rating too small'],q:[.5,.5,.6,.6,.3]},
+{id:'T1',n:'Compare feeder meter, Oct 23–24',c:1,au:'Department request',o:['No upstream draw','Upstream draw seen'],q:[.95,.9,.05,.05,.3]},
+{id:'T2',n:'Pull 15-minute interval data',c:2,au:'Department request',o:['Step (register jump)','Smooth ramp'],q:[.6,.85,.1,.2,.3]},
+{id:'T3',n:'Inspect panel, cabinet, heat and bypass',c:4,au:'Sanction required',o:['Ordinary cause found','Unexplained'],q:[.5,.5,.9,.9,.05]},
+{id:'T4',n:'Forensic image of cabinet storage and logs',c:5,au:'Sanction required',o:['Benign logs','Anomalous logs'],q:[.95,.95,.8,.4,.2]}];
+const SRC={dos:`The following observations were noted during data review but have not been established: HVAC startup coincidence. Minor phase imbalance: A small phase increase was recorded, although no single phase accounts for the total demand excursion. No conclusion can be drawn regarding internal semiconductor temperatures without additional instrumentation.`,
+tra:`POI-1 (stuttering): Uh… (looking at bare wrist) Oh! Look at the time! Really must go. Field Observation: Machine reportedly began warbling and reverberating following the interaction.`,
+deb:`Wenoti arcade on 92nd avenue has been drawing multiple times its typical amount of current from the district supply. The owner reported these inexplicable surges and claims not to have made any modifications that could have caused them.`};
+const AI=[['dos','have not been established','Dossier observations are self-labelled unestablished.'],['dos','no single phase accounts for the total demand excursion','The load is not concentrated on one phase.'],['tra','Look at the time! Really must go.','POI-1 used a scripted-sounding exit line.'],['deb','claims not to have made any modifications','Owner denies modifications (single source).'],['deb','the surge began at 22:31','Surge start time is 22:31.']];
+const PB={ord:['Correct the records and billing for the affected days (Department).','Test or replace the meter; keep the old unit and seals as evidence.','Document the cause; notify the owner and the Department.','Run a 30-day watch with the watchdog thresholds below.','Close with a lessons-learned report.'],
+int:['Preserve: photograph, hash logs, image storage (sanction required), start chain of custody.','Observe: sub-meter and power-quality logger on the cabinet circuit, thermal camera.','Isolate: cut network and wireless links, restrict access, quarantine removable media.','De-energize by lockout/tagout, performed by a qualified electrician.','Relocate the cabinet to a controlled lab after steps 1–4.','Eradicate and recover: replace storage, firmware and power supply from known-good sources; re-energize in stages with alarms.','Close: update detection rules, keep a monitoring window, report to authorities.'],
+und:['Keep monitoring with the watchdog thresholds below.','Run the next ranked test from Plan.','Escalate with the referral packet if the gap persists.','Re-test on any new reconcile failure or draw above threshold.']};
+const RX=[['Guide: phase imbalance “points to specific equipment”','Dossier: no single phase accounts for the excursion','bad'],['Guide presents HVAC, harmonics, phase as findings','Dossier: “have not been established”','bad'],['Debrief cites [Transcript 1]','The file provided is Transcript A','wn'],['Guide ties the surge to 22:31','Dossier gives daily totals only','wn'],['Debrief: “current”, multiple surges','Dossier: kWh, one clear step, no demand data','wn']];
+const W=p=>p<.05?'almost no chance':p<.2?'very unlikely':p<.45?'unlikely':p<=.55?'roughly even':p<.8?'likely':p<.95?'very likely':'almost certain';
+const topi=P=>P.indexOf(Math.max(...P)),ent=P=>-P.reduce((s,x)=>s+(x>0?x*Math.log2(x):0),0);
+function calc(){
+ const R=raw.trim().split('\n').map(l=>l.split(',')).map(p=>({d:(p[0]||'').trim(),r:+p[1],l:+p[2]})).filter(x=>x.d&&isFinite(x.r)&&isFinite(x.l));
+ R.forEach((x,i)=>{x.dl=i?+(x.r-R[i-1].r).toFixed(2):null;x.g=i?+(x.l-x.dl).toFixed(2):null;x.bad=i>0&&Math.abs(x.g)>.05});
+ const dl=R.filter(x=>x.dl!=null).map(x=>x.dl),m=med(dl),sd=1.4826*(med(dl.map(v=>Math.abs(v-m)))||1);
+ R.forEach(x=>x.z=x.dl==null?null:(x.dl-m)/sd);
+ const sp=R.reduce((a,x)=>x.l>a.l?x:a,R[0]),cf=R.filter(x=>x.bad),a={R,m,sd,sp,cf,mult:sp.l/m};
+ const k3=Math.sqrt(3)*A.volt*A.pf,P=sp.l/(A.win/60),mass=A.room*1.2;
+ const p={k3,req24:sp.l*1000/24/k3,reqW:sp.l*1000/(A.win/60)/k3,cap24:k3*A.amps*24/1000,P,dTs:P*1000/(mass*1005),store:mass*1005*10/3.6e6+.72,si:sp.l*3.6e6/7e5/1000,cov:Math.min(100,A.comp*24/Math.max(1,sp.l-m)*100)};
+ p.fail=p.req24>A.amps;const mcr=mc(a);
+ const g0=cf[0]?cf[0].g:0;
+ S={a,p,mc:mcr,ev:[{id:'E1',t:`${sp.d} needs ≥${f(p.req24,0)} A over 24 h (service ${A.amps} A)`,s:'reg',e:1,r:mcr.pc<.05?[1,1,-2,-1,1]:mcr.pc<.5?[1,1,-1,0,1]:[0,0,0,0,0]},
+ {id:'E2',t:`Logged vs register gap ${f(g0)} kWh${cf[0]?' on '+cf[0].d:''}`,s:'use',e:1,r:cf[0]?[2,1,0,2,0]:[0,0,0,0,0]},
+ {id:'E3',t:'No heat observed vs the energy claim (sink ledger)',s:'nar',e:0,r:p.dTs>.1?[1,1,-2,-1,1]:[0,0,0,0,0]},
+ {id:'E4',t:`HVAC startup covers ≤${f(p.cov,0)}% of excess`,s:'nar',e:0,r:[0,0,-1,0,0]},
+ {id:'E5',t:'Elevated harmonic content',s:'nar',e:0,r:[0,1,1,1,1]},
+ {id:'E6',t:'No single phase accounts for the surge',s:'nar',e:0,r:[0,0,-1,1,1]},
+ {id:'E7',t:'POI-1 fiddled with the machine, deflected, fled',s:'tra',e:1,r:[0,0,0,2,1]},
+ {id:'E8',t:'Machine reportedly warbled afterwards',s:'tra',e:0,r:[-1,-1,0,1,1]}]};
+ pst()}
+function pst(){const lp=PR.map(Math.log);S.ev.forEach(e=>{const s=SR.find(x=>x.id===e.s);e.w=RW[s.r]*CW[s.c]*(e.e?1:.4);e.rt=e.r.map((v,h)=>ovr[e.id+h]??v);e.rt.forEach((v,h)=>lp[h]+=e.w*Math.log(LR[v]))});
+ TS.forEach(t=>{const o=done[t.id];if(o!=null)t.q.forEach((q,h)=>lp[h]+=Math.log(o?1-q:q))});
+ const mx=Math.max(...lp),e=lp.map(v=>Math.exp(v-mx)),z=e.reduce((s,v)=>s+v,0);return S.P=e.map(v=>v/z)}
+function gate(){const P=S.P,c1=100-S.p.cov>=50,c2=['T1','T2','T3'].every(t=>done[t]!=null),c3=P[4]>=.5&&Math.max(...P.slice(0,4))<=.15;return{c1,c2,c3,open:c1&&c2&&c3}}
+function eig(t,P){let g=ent(P);for(const o of[0,1]){const q=P.map((x,h)=>x*(o?1-t.q[h]:t.q[h])),po=q.reduce((s,x)=>s+x,0);if(po>0)g-=po*ent(q.map(x=>x/po))}return g}
+function flip(){const b=topi(S.P);for(const e of S.ev)for(let h=0;h<5;h++)for(const d of[-1,1]){const nv=e.rt[h]+d;if(nv<-2||nv>2)continue;const pv=ovr[e.id+h];ovr[e.id+h]=nv;const t=topi(pst());if(pv===undefined)delete ovr[e.id+h];else ovr[e.id+h]=pv;if(t!==b){pst();return`${e.id} on “${HY[h]}” shifted ${d>0?'+1':'−1'}`}}pst();return null}
+function b32(s){const al='ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';let b='';for(const c of s.toUpperCase().replace(/=+$/,'')){const i=al.indexOf(c);if(i<0)return'';b+=i.toString(2).padStart(5,'0')}let o='';for(let i=0;i+8<=b.length;i+=8)o+=String.fromCharCode(parseInt(b.slice(i,i+8),2));return o}
+function decs(s){const r=[['Base32',b32(s)]];try{r.push(['Base64',atob(s)])}catch(e){}
+ if(/^([0-9a-f]{2})+$/i.test(s))r.push(['Hex',s.match(/../g).map(h=>String.fromCharCode(parseInt(h,16))).join('')]);
+ r.push(['ROT13',s.replace(/[a-z]/gi,c=>String.fromCharCode((c<='Z'?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26))]);
+ return r.map(([m,v])=>({m,v,sc:v?(v.match(/[a-z ]/gi)||[]).length/v.length:0})).sort((x,y)=>y.sc-x.sc)}
+const sh=async s=>{try{return[...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s)))].map(b=>b.toString(16).padStart(2,'0')).join('')}catch(e){return'unavailable'}};
+async function lg(a,p){const q=LOG.length?LOG[LOG.length-1].h:'genesis',s=LOG.length,t=new Date().toISOString();LOG.push({s,t,a,p,q,h:await sh(`${q}|${s}|${t}|${a}|${p}`)});r4()}
+async function vf(){let q='genesis';for(const e of LOG){const h=await sh(`${q}|${e.s}|${e.t}|${e.a}|${e.p}`);if(h!==e.h||e.q!==q){$('#vr').innerHTML=`<span class=bad>Chain broken at entry #${e.s} (${e.a}). Edited after sealing.</span>`;return}q=e.h}$('#vr').innerHTML=`<span class=ok>Chain intact: ${LOG.length} entries.</span>`}
+function tp(){if(LOG.length>1){LOG[1].p+=' ';r4()}}
+function sc(k){done=k==='A'?{T1:0,T2:0}:k==='B'?{T0:1,T1:1,T2:1,T3:1,T4:1}:{};lg('scenario',k||'reset');run()}
+function rec(t,o){done[t]=o;lg('test-returned',t+':'+o);run()}
+async function ex(){const dh=await sh(raw),g=gate(),P=S.P,v=vd();$('#pk').value=`REFERRAL PACKET, Case 002, Wenoti Arcade
+To: Department of Electricity. From: EXUN analyst workstation.
+Verdict: ${v.l}
+Hypotheses: ${HY.map((h,i)=>h+' '+f(P[i]*100,0)+'% ('+W(P[i])+')').join('; ')}
+Gate: ${g.open?'OPEN':'CLOSED'} (ceiling ${g.c1?'met':'not met'}; tests ${g.c2?'returned':'outstanding'}; probability ${g.c3?'met':'not met'})
+Discrepancies for verification: ${S.a.cf.map(x=>x.d+': logged '+f(x.l)+' vs register '+f(x.dl)+' ('+f(x.g)+' kWh unaccounted)').join('; ')||'none'}
+Capacity: ${S.a.sp.d} needs ≥${f(S.p.req24,0)} A over 24 h vs ${A.amps} A assumed service. Please confirm the nameplate rating.
+Monte Carlo (seed ${SM.seed}, ${SM.N} runs): wiring could carry the energy over 24 h in ${f(S.mc.pc*100,1)}% of runs; ordinary loads reached it in ${f(S.mc.po*100,1)}%; unexplained median ${f(S.mc.p50,0)} kWh (5th to 95th percentile ${f(S.mc.p5,0)} to ${f(S.mc.p95,0)})
+Source grades: ${SR.map(s=>s.n+' '+s.r+'/'+s.c).join('; ')}
+Tests returned: ${Object.keys(done).map(t=>t+'='+TS.find(x=>x.id===t).o[done[t]]).join(', ')||'none'}
+Input data SHA-256: ${dh}
+Chain head: ${LOG.length?LOG[LOG.length-1].h:'none'}`;lg('referral-exported',dh.slice(0,12))}
+function vd(){const g=gate(),P=S.P,t=topi(P);return g.open?{k:'int',l:'Intrusion supported: declare and contain'}:(t<4&&P[t]>=.5)?{k:'ord',l:'Ordinary cause likely: '+HY[t]}:{k:'und',l:'Undetermined: extradigital not supportable yet'}}
+let T3=null,NSEL=null;
+const ND=[['feed','District feeder',[-7,.8,-1.5],[1.6,1.6,1.6],['T1'],'Upstream supply. The feeder meter shows whether the grid really delivered the energy.'],
+['meter','Arcade meter',[-4,1.1,-3.2],[.8,1,.5],['T2'],'Register vs log: the Oct 24 conflict lives here. Interval data comes from this meter.'],
+['panel','Service panel and breaker',[-1.5,1.2,-3.2],[1.2,1.6,.6],['T0','T3'],'The nameplate rating and breaker trip logs show what the wiring can carry.'],
+['cab','Cabinet: The Reckoning V',[2.5,1.3,.5],[1.3,2.6,1.1],['T3','T4'],'The machine of interest. Inspect for heat and bypass; image its storage and logs.'],
+['hvac','HVAC compressor',[6,.7,-3],[1.8,1.4,1.4],[],'The dossier says it started up. At the assumed size it covers only a small share.'],
+['door','Entrance (POI-1 path)',[-5.5,.9,3.5],[.4,1.8,1.4],[],'Where POI-1 entered at 22:31. CCTV here is worth requesting but is not a ranked test yet.']];
+const ST={mu:'--mu',ok:'--ok',bad:'--bad',wn:'--wn'};
+function ns(id){const d=done,p=S.p;
+ if(id=='feed')return d.T1==null?['mu','Not checked']:d.T1?['ok','Upstream draw seen']:['bad','No upstream draw: records or meter suspect'];
+ if(id=='meter')return S.a.cf.length?['bad',S.a.cf.length+' register conflict(s)']:['ok','Register reconciles'];
+ if(id=='panel')return d.T0!=null?(d.T0?['wn','Rating too small for the claim']:['ok','Rating covers the draw']):p.fail?['wn','Needs ≥'+f(p.req24,0)+' A vs '+A.amps+' A assumed']:['mu','Not checked'];
+ if(id=='cab')return d.T4!=null?(d.T4?['bad','Anomalous logs']:['ok','Benign logs']):d.T3!=null?(d.T3?['bad','Unexplained on inspection']:['ok','Ordinary cause found']):['mu','Not inspected'];
+ if(id=='hvac')return['wn','Covers ≤'+f(p.cov,0)+'% of the excess'];
+ return['mu','Context only']}
+function whatif(){const P=S.P,rows=TS.filter(t=>done[t.id]==null).map(t=>t.o.map((o,j)=>{const q=P.map((x,h)=>x*(j?1-t.q[h]:t.q[h])),z=q.reduce((a,x)=>a+x,0),n=q.map(x=>x/z),k=topi(n);return`<tr><td>${t.id} ${t.n}<td>${o}<td>${HY[k]} ${f(n[k]*100,0)}%<td>${f(n[4]*100,0)}%</tr>`}).join('')).join('');
+ return`<div class=c><h2>What would change the verdict?</h2><table><tr><th>Test<th>If it returns<th>Leading explanation<th>Extradigital</tr>${rows||'<tr><td>All tests returned</tr>'}</table><p class=mu>Each row shows the result if only that one test comes back that way.</p><p class=mu>In the Monte Carlo, the biggest driver of whether the wiring could carry the energy is “${S.mc.s1[0].n}”; test T0 settles it at the lowest cost.</p></div>`}
+function stb(){const v=vd(),g=gate(),P=S.P,k=topi(P);$('#st').innerHTML=`<span><b class="${v.k=='int'?'bad':v.k=='ord'?'ok':'wn'}">${v.l}</b></span><span>Gate ${g.open?'open':'closed'}</span><span>Leading: ${HY[k]} ${f(P[k]*100,0)}%</span><span>Extradigital ${f(P[4]*100,0)}%</span><span>${LOG.length} sealed entries</span>`}
+function rc(){LOG=[];lg('case-open','Chain reset')}
+function cp(){const t=$('#pk');t.select();try{navigator.clipboard.writeText(t.value).catch(()=>document.execCommand('copy'))}catch(e){document.execCommand('copy')}}
+function init3(){
+ if(!window.THREE){$('#h3').textContent='The 3D library did not load. Check your connection.';return}
+ try{
+ const box=$('#c3'),ren=new THREE.WebGLRenderer({antialias:true,alpha:true}),sc3=new THREE.Scene(),cam=new THREE.PerspectiveCamera(42,1,.1,100),grp=new THREE.Group(),ray=new THREE.Raycaster(),cv=ren.domElement;
+ ren.setPixelRatio(Math.min(devicePixelRatio,2));box.appendChild(cv);cv.style.touchAction='none';sc3.add(grp,new THREE.AmbientLight(0xffffff,.8));
+ const dl=new THREE.DirectionalLight(0xffffff,.55);dl.position.set(6,12,8);sc3.add(dl);
+ let th=.5,ph=1.05,rd=20,dr=false,mv=0,lx=0,ly=0;
+ const size=()=>{const w=box.clientWidth,h=box.clientHeight;if(w&&h){ren.setSize(w,h);cam.aspect=w/h;cam.updateProjectionMatrix()}};new ResizeObserver(size).observe(box);
+ const col=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+ const lab=(t,x,y,z,c)=>{const k=document.createElement('canvas');k.width=512;k.height=64;const g=k.getContext('2d');g.font='bold 28px system-ui,sans-serif';g.fillStyle=c;g.textAlign='center';g.fillText(t,256,42);const m=new THREE.Sprite(new THREE.SpriteMaterial({map:new THREE.CanvasTexture(k),transparent:true,depthTest:false}));m.position.set(x,y,z);m.scale.set(4.8,.6,1);return m};
+ const tube=(a,b,r,c,o)=>{const p1=new THREE.Vector3(...a),p2=new THREE.Vector3(...b),d=p2.clone().sub(p1),m=new THREE.Mesh(new THREE.CylinderGeometry(r,r,d.length(),8),new THREE.MeshBasicMaterial({color:c,transparent:true,opacity:o}));m.position.copy(p1.clone().add(p2).multiplyScalar(.5));m.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),d.normalize());return m};
+ const pick=e=>{const r=cv.getBoundingClientRect();ray.setFromCamera(new THREE.Vector2((e.clientX-r.left)/r.width*2-1,-((e.clientY-r.top)/r.height)*2+1),cam);const h=ray.intersectObjects(grp.children.filter(o=>o.userData.id))[0];return h?h.object.userData.id:null};
+ cv.addEventListener('pointerdown',e=>{dr=true;mv=0;lx=e.clientX;ly=e.clientY;cv.setPointerCapture(e.pointerId)});
+ cv.addEventListener('pointermove',e=>{if(!dr)return;mv+=Math.abs(e.clientX-lx)+Math.abs(e.clientY-ly);th-=(e.clientX-lx)*.01;ph=Math.min(1.5,Math.max(.3,ph-(e.clientY-ly)*.01));lx=e.clientX;ly=e.clientY});
+ cv.addEventListener('pointerup',e=>{dr=false;if(mv<6){NSEL=pick(e);T3.up()}});
+ cv.addEventListener('wheel',e=>{e.preventDefault();rd=Math.min(32,Math.max(10,rd+e.deltaY*.01))},{passive:false});
+ const info=()=>{const n=ND.find(x=>x[0]==NSEL);if(!n){$('#h3').innerHTML='Click a location to see its status and record field results.';return}
+  const[c,t]=ns(n[0]);$('#h3').innerHTML=`<b>${n[1]}</b> <span class="t ${c}">${t}</span><br>${n[5]}<br>`+(n[4].length?n[4].map(id=>{const T=TS.find(x=>x.id==id);return done[id]!=null?`<div class=mu>${id} returned: ${T.o[done[id]]}</div>`:`<div>${id} ${T.n}: ${T.o.map((o,j)=>`<button onclick="rec('${id}',${j})">${o}</button>`).join(' ')}</div>`}).join(''):'<span class=mu>No test is attached to this location.</span>')};
+ T3={reset(){th=.5;ph=1.05;rd=20},size,up(){
+  grp.children.slice().forEach(o=>{grp.remove(o);if(o.geometry)o.geometry.dispose();if(o.material){if(o.material.map)o.material.map.dispose();o.material.dispose()}});
+  const tx=col('--tx'),P=S.P,pos={};
+  const fl=new THREE.Mesh(new THREE.BoxGeometry(18,.2,10),new THREE.MeshLambertMaterial({color:col('--ft')}));fl.position.y=-.1;grp.add(fl);
+  const wl=new THREE.Mesh(new THREE.BoxGeometry(18,3,.1),new THREE.MeshLambertMaterial({color:col('--mu'),transparent:true,opacity:.15}));wl.position.set(0,1.5,-4.1);grp.add(wl);
+  ND.forEach(n=>{pos[n[0]]=n[2];const[c]=ns(n[0]),m=new THREE.Mesh(new THREE.BoxGeometry(...n[3]),new THREE.MeshLambertMaterial({color:col(ST[c])}));m.position.set(...n[2]);m.userData={id:n[0]};grp.add(m);
+   if(NSEL==n[0]){const e=new THREE.LineSegments(new THREE.EdgesGeometry(m.geometry),new THREE.LineBasicMaterial({color:tx}));e.position.copy(m.position);e.scale.setScalar(1.08);grp.add(e)}
+   grp.add(lab(n[1],n[2][0],n[2][1]+n[3][1]/2+.6,n[2][2],tx))});
+  [['feed','meter'],['meter','panel'],['panel','cab'],['panel','hvac']].forEach(([a,b])=>grp.add(tube(pos[a],pos[b],.07,col('--ac'),.85)));
+  const s0=pos.feed,e2=pos.cab,pb=.12+.88*P[3];
+  for(let k=0;k<12;k+=2){const a=s0.map((v,i)=>v+(e2[i]-v)*k/12),b=s0.map((v,i)=>v+(e2[i]-v)*(k+1)/12);grp.add(tube(a,b,.05,col('--bad'),pb))}
+  grp.add(lab('possible bypass: '+f(P[3]*100,0)+'%',(s0[0]+e2[0])/2,(s0[1]+e2[1])/2+1.2,(s0[2]+e2[2])/2+.8,col('--bad')));
+  info()}};
+ matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>T3&&T3.up());
+ const loop=()=>{requestAnimationFrame(loop);if(!$('#s5').classList.contains('on'))return;cam.position.set(rd*Math.sin(ph)*Math.sin(th),rd*Math.cos(ph)+1,rd*Math.sin(ph)*Math.cos(th));cam.lookAt(0,1,-.5);ren.render(sc3,cam)};loop();
+ }catch(e){$('#h3').textContent='3D needs WebGL, which is not available here.'}}
+const SM={cd:1,mult:6,st:4,sec:3,n:10,kw:.5,hr:24,seed:2026,N:10000};
+function mb(s){return()=>{s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const cor=(x,y)=>{const n=x.length,mx=x.reduce((a,v)=>a+v,0)/n,my=y.reduce((a,v)=>a+v,0)/n;let sxy=0,sx=0,sy=0;for(let i=0;i<n;i++){const dx=x[i]-mx,dy=y[i]-my;sxy+=dx*dy;sx+=dx*dx;sy+=dy*dy}return sxy/Math.sqrt(sx*sy||1)};
+function mc(a){const R=mb(SM.seed),tri=(lo,m,hi)=>{const u=R(),c=(m-lo)/(hi-lo);return u<c?lo+Math.sqrt(u*(hi-lo)*(m-lo)):hi-Math.sqrt((1-u)*(hi-lo)*(hi-m))},nm=()=>Math.sqrt(-2*Math.log(R()||1e-9))*Math.cos(6.2832*R());
+ const o=a.sp.l,N=SM.N,un=[],sl=[],X=[];let pc=0,pw=0,po=0,mxs=0;
+ for(let i=0;i<N;i++){const am=tri(32,A.amps,200),V=tri(400,A.volt,430),pf=tri(.8,A.pf,.98),ck=tri(3,A.comp,30),cd=tri(0,.4,1),mu=tri(4,6,8),ns=tri(1,4,20),sc=tri(1,3,10),n=tri(0,6,40),dk=tri(.2,.5,1.5),dh=tri(0,8,24),bs=Math.max(5,a.m+a.sd*nm());
+  const k3=Math.sqrt(3)*V*pf,c24=k3*am*24/1000,sim=bs+ck*cd*24+ck*mu*ns*sc/3600+n*dk*dh;
+  if(c24>=o)pc++;if(k3*am/1000*A.win/60>=o)pw++;if(sim>=o)po++;mxs=Math.max(mxs,sim);un.push(o-sim);sl.push(c24-o);X.push([am,V,pf,ck,cd,n,dk,dh,bs])}
+ const s=[...un].sort((x,y)=>x-y),q=p=>s[Math.min(N-1,Math.floor(p*N))],bins=Array(20).fill(0),mn=s[0],mx=s[N-1];
+ un.forEach(v=>bins[Math.min(19,Math.floor((v-mn)/(mx-mn||1)*20))]++);
+ const NM=['Service rating','Voltage','Power factor','Compressor kW','Compressor duty','Extra devices','Device kW','Device hours','Baseline'],col=j=>X.map(r=>r[j]);
+ const s1=[0,1,2].map(j=>({n:NM[j],r:cor(col(j),sl)})).sort((x,y)=>Math.abs(y.r)-Math.abs(x.r)),s2=[3,4,5,6,7,8].map(j=>({n:NM[j],r:cor(col(j),un)})).sort((x,y)=>Math.abs(y.r)-Math.abs(x.r));
+ return{N,pc:pc/N,pw:pw/N,po:po/N,mxs,p5:q(.05),p50:q(.5),p95:q(.95),bins,mn,mx,s1,s2}}
+function rob(){const R=mb(SM.seed+1),b0=topi(S.P),K=2000,xs=[];let same=0;
+ for(let i=0;i<K;i++){const z=()=>Math.sqrt(-2*Math.log(R()||1e-9))*Math.cos(6.2832*R()),lp=PR.map(x=>Math.log(x)+.5*z());
+  S.ev.forEach(e=>{const j=.7+.6*R();e.rt.forEach((v,h)=>lp[h]+=j*e.w*Math.log(LR[v]))});
+  TS.forEach(t=>{const o=done[t.id];if(o!=null)t.q.forEach((q,h)=>lp[h]+=Math.log(o?1-q:q))});
+  const mm=Math.max(...lp),ee=lp.map(v=>Math.exp(v-mm)),ss=ee.reduce((a,x)=>a+x,0),PP=ee.map(x=>x/ss);if(topi(PP)==b0)same++;xs.push(PP[4])}
+ xs.sort((x,y)=>x-y);return{same:same/K,lo:xs[Math.floor(K*.05)],hi:xs[Math.floor(K*.95)]}}
+function r6(){const a=S.a,m=S.mc,o=a.sp.l,k3=Math.sqrt(3)*A.volt*A.pf,comp=A.comp*SM.cd*24,tr=A.comp*SM.mult*SM.st*SM.sec/3600,dev=SM.n*SM.kw*SM.hr,tot=a.m+comp+tr+dev,un=o-tot,pc=x=>f(x*100,1)+'%';
+ const inp=[['cd','Compressor duty %',100],['mult','Startup current ×',1],['st','Starts that day',1],['sec','Seconds per start',1],['n','Extra devices',1],['kw','kW each',1],['hr','Hours on',1]].map(([k,l,c])=>`<label>${l} <input type=number step=any value=${+(SM[k]*c).toFixed(2)} onchange="SM.${k}=this.value/${c};run()"></label>`).join('');
+ const dr=l=>l.map(x=>`${x.n} (${x.r>0?'+':''}${f(x.r,2)})`).join(', '),mxb=Math.max(...m.bins);
+ $('#s6').innerHTML=`<div class=c><h2>Incident reconstruction: can ordinary loads rebuild the observed energy?</h2>
+ <div style="text-align:center"><div class=card style="display:inline-block">Utility meter<br><b>${f(o,0)} kWh observed</b> <span class=mu>(${f(o/24,1)} kW average over 24 h)</span></div><div>↓</div><div class=card style="display:inline-block">Distribution board</div><div>↓</div>
+ <div class=g><div>HVAC compressor<b>${f(comp+tr,1)} kWh</b></div><div>Electronic loads<b>${f(dev,1)} kWh</b></div><div>Other circuits (baseline)<b>${f(a.m,1)} kWh</b></div></div></div>
+ <p class=mu>Compressor size, power factor, voltage and window come from the assumptions in Verify. Defaults are an upper-bound ordinary day: compressor running all day plus ten extra devices.</p><p>${inp}</p>
+ <table><tr><th>Component<th>kWh<th>Share of observed</tr>${[['Baseline (median normal day)',a.m],['Compressor running',comp],['Startup transients',tr],['Extra devices',dev],['Simulated total',tot],['Observed',o],['Unexplained',un]].map(r=>`<tr><td>${r[0]}<td>${f(r[1],2)}<td>${f(r[1]/o*100,1)}%</tr>`).join('')}</table>
+ <p><b>Counterfactual:</b> remove the startup transient and the unexplained energy changes from ${f(un,2)} to ${f(un+tr,2)} kWh, only ${f(tr,2)} kWh. A compressor start draws about ${f(A.comp*SM.mult*1000/k3,0)} A for ${SM.sec} s, which is a big current but almost no energy.</p></div>
+ <div class=c><h2>Monte Carlo: carrying the uncertainty through</h2><label>Seed <input type=number value=${SM.seed} onchange="SM.seed=+this.value;lg('montecarlo','seed='+SM.seed);run()"></label><label>Runs <select onchange="SM.N=+this.value;run()">${[2000,10000,50000].map(n=>`<option${n==SM.N?' selected':''}>${n}`).join('')}</select></label><button onclick="lg('montecarlo','rerun seed='+SM.seed+' N='+SM.N);run()">Re-run and seal</button>
+ <div class=g style="margin-top:8px"><div>Wiring could carry it over 24 h<b>${pc(m.pc)}</b></div><div>Within ${A.win} min<b>${pc(m.pw)}</b></div><div>Ordinary loads reach it<b>${pc(m.po)}</b></div><div>Unexplained, median<b>${f(m.p50,0)} kWh</b></div></div>
+ <p>${m.po==0?`In none of ${m.N.toLocaleString()} runs did ordinary loads reach the observed energy. The largest simulated day was ${f(m.mxs,0)} kWh against ${f(o,0)} kWh observed.`:`Ordinary loads reached the observed energy in ${pc(m.po)} of runs.`} The 5th to 95th percentile of unexplained energy is ${f(m.p5,0)} to ${f(m.p95,0)} kWh.</p>
+ <div style="display:flex;align-items:flex-end;gap:2px;height:70px">${m.bins.map(c=>`<div style="flex:1;background:var(--ac);height:${c/mxb*100}%"></div>`).join('')}</div><div class=mu style="display:flex;justify-content:space-between"><span>${f(m.mn,0)} kWh</span><span>unexplained energy per run</span><span>${f(m.mx,0)} kWh</span></div>
+ <p class=mu>What drives “could the wiring carry it”: ${dr(m.s1)}.<br>What drives “how much is unexplained”: ${dr(m.s2)}. These are linear correlations, a rough guide.</p>
+ <p class=mu>Ranges are analyst assumptions (triangular distributions). Monte Carlo propagates them; it does not create evidence. The seed makes every result reproducible and is sealed in the log.</p></div>`}
+function run(){calc();r0();r1();r2();r3();r4();r6();if(T3)T3.up()}
+function r0(){const{a,p}=S,tg=(c,t)=>`<span class="t ${c}">${t}</span>`;
+ const cl=[[`${a.sp.d} usage is ${f(a.sp.l,0)} kWh`,`${f(a.mult,0)}× baseline. Needs ≥${f(p.req24,0)} A over 24 h or ≥${f(p.reqW,0)} A in ${A.win} min; assumed service ${A.amps} A (max ${f(p.cap24,0)} kWh/24 h)`,p.fail?tg('bad','Doubtful'):tg('ok','Plausible')],
+ ...a.cf.map(x=>[`${x.d} usage is ${f(x.l)} kWh`,`Register moved ${f(x.dl)}; ${f(x.g)} kWh unaccounted for`,tg('bad','Contradicted')]),
+ ['HVAC startup explains it',`${A.comp} kW × 24 h = ${A.comp*24} kWh, about ${f(p.cov,0)}% of the excess`,tg('wn','Insufficient')],
+ ['Harmonic content','Describes waveform shape, not energy volume; can distort some meters',tg('wn','Unestablished')],
+ ['Phase imbalance','Dossier says no single phase accounts for it; the guide reads it the opposite way',tg('bad','Misread')],
+ ['No heat observed',`If the register is right, ${f(p.P/1000,1)} MW into ${A.room} m³ warms the air ≈${f(p.dTs,1)} °C/s; on-site storage ≈${f(p.store,1)} kWh (${f(p.store/a.sp.l*100,2)}%)`,tg('bad','Contradicts energy claim')],
+ ['Surge happened at 22:31','Dossier gives daily totals only; the link is the guide’s inference',tg('wn','Unestablished')]];
+ const d=decs(mid);
+ $('#s0').innerHTML=`<div class=c><h2>How to use RAZOR</h2><ol><li>Verify: check the numbers. Edit the assumptions below and everything recomputes.</li><li>Judge: grade the sources and click matrix cells to challenge a rating.</li><li>Plan: record each field result you get back; the ranking and probabilities update.</li><li>Site Map: see the same results on the arcade’s power path.</li><li>Respond: follow the playbook the verdict selects.</li><li>Seal: verify the log and produce the referral packet.</li></ol></div><div class=c><h2>Assumptions (editable, everything recomputes)</h2>${[['amps','Service A'],['volt','Volts'],['pf','PF'],['comp','Compressor kW'],['room','Room m³'],['win','Surge window min']].map(([k,l])=>`<label>${l} <input type=number step=any value=${A[k]} onchange="A.${k}=+this.value;lg('assumption','${k}='+this.value);run()"></label>`).join('')}
+ <details><summary class=mu>Load your own meter table (date, register, logged)</summary><textarea id=dt rows=6>${raw}</textarea><button onclick="raw=$('#dt').value;lg('data-loaded',raw.length+' chars');run()">Analyze</button></details></div>
+ <div class=c><h2>Ledger reconcile and baseline</h2><table><tr><th>Date<th>Register<th>Logged<th>Δ register<th>Gap<th>Robust z<th>Status</tr>${a.R.map(x=>`<tr><td>${x.d}<td>${f(x.r)}<td>${f(x.l)}<td>${x.dl==null?'n/a':f(x.dl)}<td>${x.g==null?'n/a':f(x.g)}<td>${x.z==null?'n/a':f(x.z,0)}<td>${x.dl==null?tg('mu','no prior'):x.bad?tg('bad','Conflict'):x.z>6?tg('wn','Outlier'):tg('ok','OK')}</tr>`).join('')}</table>
+ <p class=mu>Baseline ${f(a.m)} kWh/day, robust SD ${f(a.sd)}. A day is an outlier beyond 6 robust SD.</p></div>
+ <div class=c><h2>Energy Sink Ledger: where did ${f(a.sp.l,0)} kWh go?</h2><div class=g><div>Energy<b>${f(a.sp.l*3.6e6/1e9,2)} GJ</b></div><div>EV packs (100 kWh)<b>${f(a.sp.l/100,0)}</b></div><div>Avg power in ${A.win} min<b>${f(p.P/1000,2)} MW</b></div><div>Room air warming<b>${f(p.dTs,1)} °C/s</b></div><div>Silicon to hold it (1,000 K)<b>${f(p.si,0)} t</b></div><div>On-site storage<b>${f(p.store,1)} kWh</b></div></div></div>
+ <div class=c><h2>Claim verification</h2><table>${cl.map(c=>`<tr><td class=w>${c[0]}<td class=w>${c[1]}<td>${c[2]}</tr>`).join('')}</table>
+ <p class=mu>Integrity: ${a.cf.length+(p.dTs>.1?1:0)} internal contradictions, ${RX.length} cross-document discrepancies, 1 unsupported timing link, 1 evidence gap (no interval data).</p></div>
+ <div class=c><h2>Contradiction radar</h2><table>${RX.map(x=>`<tr><td class=w>${x[0]}<td class=w>${x[1]}<td>${tg(x[2],x[2]=='bad'?'Conflict':'Check')}</tr>`).join('')}</table></div>
+ <div class=c><h2>Decoder</h2><input id=mi value="${mid}" size=20 onchange="mid=this.value.trim();lg('decode',mid);run()"> ${d.slice(0,3).map((x,i)=>`<div>${i?'':'<b>Best: </b>'}${x.m}: <code>${x.v.replace(/[<&]/g,'?')}</code> <span class=mu>(readability ${f(x.sc*100,0)}%)</span></div>`).join('')}<p class=mu>A lead, not evidence: the decode is reproducible but its meaning is unknown.</p></div>`}
+function r1(){const P=S.P,g=gate(),fl=flip(),rb=rob(),ok=AI.filter(x=>SRC[x[0]].includes(x[1])).length;
+ const cs=(e,h)=>`<td onclick="ovr['${e.id}${h}']=${e.rt[h]>=2?-2:e.rt[h]+1};lg('rating','${e.id}/${HS[h]}');run()" class="${e.rt[h]<0?'bad':e.rt[h]>0?'ok':'mu'}">${SY[e.rt[h]]}</td>`;
+ $('#s1').innerHTML=`<div class=c><h2>Source register (NATO-style grades, editable)</h2><table><tr><th>Source<th>Reliability A–F<th>Credibility 1–6</tr>${SR.map((s,i)=>`<tr><td>${s.n}<td><select onchange="SR[${i}].r=this.value;lg('grade','${s.id}:'+this.value);run()">${'ABCDEF'.split('').map(x=>`<option${x==s.r?' selected':''}>${x}`).join('')}</select><td><select onchange="SR[${i}].c=+this.value;lg('grade','${s.id}:'+this.value);run()">${[1,2,3,4,5,6].map(x=>`<option${x==s.c?' selected':''}>${x}`).join('')}</select></tr>`).join('')}</table></div>
+ <div class=c><h2>Competing hypotheses (click a cell to change a rating)</h2><table class=m><tr><th style="text-align:left">Evidence<th>Weight${HS.map(h=>'<th>'+h).join('')}</tr>${S.ev.map(e=>`<tr><td class=w style="text-align:left">${e.id} ${e.t} ${e.e?'':'<span class=mu>(unestablished)</span>'}<td>${f(e.w,2)}${e.rt.map((_,h)=>cs(e,h)).join('')}</tr>`).join('')}</table></div>
+ <div class=c><h2>Posterior</h2><table>${HY.map((h,i)=>`<tr><td>${h}<td style="width:45%"><div class=bar><i style="width:${P[i]*100}%"></i></div><td>${f(P[i]*100,0)}%<td class=mu>${W(P[i])}</tr>`).join('')}</table>
+ <p class=mu>${fl?'Flip point: ranking changes if '+fl+'.':'Ranking is stable under any single-step rating change.'} Independence is assumed; merge correlated items.</p><p>Robustness (2,000 runs with perturbed priors and weights): the leading explanation stays “${HY[topi(S.P)]}” in ${f(rb.same*100,0)}% of runs, and extradigital ranges from ${f(rb.lo*100,0)}% to ${f(rb.hi*100,0)}% (5th to 95th percentile).</p></div>
+ <div class="c gate ${g.open?'open':''}"><b>Burden-of-proof gate: ${g.open?'OPEN':'CLOSED'}</b><br>${g.c1?'✓':'✗'} Ordinary causes leave at least half of the excess unexplained (${f(100-S.p.cov,0)}%)<br>${g.c2?'✓':'✗'} Discriminating tests T1, T2, T3 returned<br>${g.c3?'✓':'✗'} Extradigital at least 50% and every other hypothesis at most 15%</div>
+ <div class=c><h2>Assist (replay mode, proposes only)</h2><table>${AI.map(x=>{const v=SRC[x[0]].includes(x[1]);return`<tr><td class=w>${x[2]}<td class=w>“${x[1]}”<td><span class="t ${v?'ok':'bad'}">${v?'Quote verified':'Rejected: not in source'}</span></tr>`}).join('')}</table>
+ <p class=mu>${ok} of ${AI.length} claims survived quote-or-reject. AI never sets grades, ratings or numbers.</p>
+ <div class=card><b>Devil’s advocate (replay):</b> the strongest case against “records error” is that harmonics and the warbling report, if real, indicate a physical electrical event. It would be falsified if T1 finds no upstream draw.</div></div>`}
+function r2(){const P=S.P,wi=whatif(),rk=TS.filter(t=>done[t.id]==null).map(t=>({t,g:eig(t,P)})).map(x=>({...x,s:x.g/x.t.c})).sort((a,b)=>b.s-a.s);
+ $('#s2').innerHTML=`<div class=c><h2>Next best steps (information gain per cost)</h2>${rk.length?rk.map((x,i)=>`<div class=card><b>${i?'':'Next: '}${x.t.id} ${x.t.n}</b> <span class=mu>cost ${x.t.c}/5, ${x.t.au}, gain ${f(x.g,2)} bits, score ${f(x.s,2)}</span><br>${x.t.o.map((o,j)=>`<button onclick="rec('${x.t.id}',${j})">${o}</button> `).join('')}</div>`).join(''):'<p>All tests returned.</p>'}
+ ${Object.keys(done).length?'<p class=mu>Returned: '+Object.keys(done).map(t=>t+' = '+TS.find(x=>x.id===t).o[done[t]]).join('; ')+'</p>':''}</div>
+ ${wi}<div class=c><h2>Replay Department replies</h2><button onclick="sc('A')">Reply A: meter swap</button> <button onclick="sc('B')">Reply B: real upstream ramp</button> <button onclick="sc('')">Reset</button><p class=mu>Both replies are team-authored fiction. Watch the posterior and gate move in Judge.</p></div>
+ <div class=c><h2>Decision tree (main path)</h2><pre>T1 Feeder meter, Oct 23–24
+├─ No upstream draw → records or meter fault → seals, service log
+└─ Upstream draw → T2 interval data
+   ├─ Step → swap or reset → service log
+   └─ Ramp → T3 on-site inspection → unexplained → declare, then contain
+Step 0 (free, parallel): nameplate rating and breaker trip logs</pre></div>`}
+function r3(){const v=vd(),a=S.a,PL=PB[v.k];
+ $('#s3').innerHTML=`<div class=c><h2>Verdict</h2><b class="${v.k=='int'?'bad':v.k=='ord'?'ok':'wn'}">${v.l}</b></div>
+ <div class=c><h2>${v.k=='int'?'Containment ladder (least disruptive first, evidence preserved first)':v.k=='ord'?'Ordinary-cause playbook':'Undetermined playbook'}</h2><ol>${PL.map(x=>`<li>${x}</li>`).join('')}</ol><p class=mu>Electrical work belongs to qualified electricians. Intrusive steps need sanction.</p></div>
+ <div class=c><h2>Watchdog thresholds (Residual running daily)</h2><p>Alert when logged vs register differs by more than 0.05 kWh, or daily usage exceeds ${f(a.m+6*a.sd)} kWh (baseline + 6 robust SD).</p></div>`}
+function r4(){stb();$('#s4').innerHTML=`<div class=c><h2>How Seal works</h2><ol><li>Everything you do (changing an assumption, grade or rating, recording a test result, loading data) adds one entry to the log below.</li><li>Each entry’s hash is the SHA-256 of the previous hash plus its own number, time, action and detail. Change any past entry and every hash after it stops matching.</li><li>Click “Verify chain” to recompute every hash. You should see “Chain intact”.</li><li>Click “Tamper with entry #1” to edit an old entry, then click “Verify chain” again. It names the first broken entry.</li><li>Click “Reset chain” to start a clean log.</li><li>Click “Generate referral packet” to build the report for the Department. It includes the SHA-256 of your input data and the latest chain hash, so the recipient can recompute both and confirm nothing changed after you sealed it. “Copy packet” copies it.</li></ol></div><div class=c><h2>Seal: hash-chained action log</h2><button onclick="vf()">Verify chain</button> <button onclick="tp()">Tamper with entry #1</button> <button onclick="rc()">Reset chain</button> <button class=pr onclick="ex()">Generate referral packet</button> <button onclick="cp()">Copy packet</button> <span id=vr></span>
+ <table style="margin-top:8px"><tr><th>#<th>Action<th>Detail<th>Hash</tr>${LOG.map(e=>`<tr><td>${e.s}<td>${e.a}<td class=w>${String(e.p).replace(/[<&]/g,'?').slice(0,60)}<td><code>${e.h.slice(0,14)}</code></tr>`).join('')}</table><p class=mu>Tamper-evident, not tamper-proof: it detects edits after sealing but cannot prove who made them.</p></div>
+ <div class=c><h2>Referral packet</h2><textarea id=pk rows=12 readonly placeholder="Generate the packet to fill this in."></textarea></div>`}
+const TB=['1 Verify','2 Judge','3 Plan','4 Respond','Seal','Site Map','Simulate'];
+function show(i){document.querySelectorAll('section').forEach((s,j)=>s.classList.toggle('on',i==j));document.querySelectorAll('nav button').forEach((b,j)=>b.classList.toggle('on',i==j));scrollTo(0,0)}
+$('#nv').innerHTML=TB.map((t,i)=>`<button onclick="show(${i})">${t}</button>`).join('');
+init3();run();show(0);lg('case-open','Case 002 loaded');
+</script></body></html>
